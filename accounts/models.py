@@ -19,6 +19,7 @@ class User(PermissionsMixin, AbstractBaseUser):
     is_admin = models.BooleanField(default=False, verbose_name="Admin")
     is_active = models.BooleanField(default=True, verbose_name="active")
     date_birth = models.DateField(verbose_name="تاریخ تولد", null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True,null=True)
 
     objects = UserManager()
 
