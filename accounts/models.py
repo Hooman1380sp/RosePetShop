@@ -19,7 +19,7 @@ class User(PermissionsMixin, AbstractBaseUser):
     is_admin = models.BooleanField(default=False, verbose_name="Admin")
     is_active = models.BooleanField(default=True, verbose_name="active")
     date_birth = models.DateField(verbose_name="تاریخ تولد", null=True, blank=True)
-    created = models.DateTimeField(auto_now_add=True,null=True)
+    created = models.DateTimeField(auto_now_add=True, null=True)
 
     objects = UserManager()
 
@@ -41,13 +41,13 @@ class User(PermissionsMixin, AbstractBaseUser):
     def is_staff(self):
         return self.is_admin
 
+    @property
+    def get_user_by_score(self):
+        return User.objects.order_by('-score')[:10]
+
     class Meta:
         app_label = "accounts"
         # db_table = "User"
         db_table_comment = "custom user model with row attribute(AbstractBaseUser)"
         verbose_name = "User"
         verbose_name_plural = "Users"
-
-
-# class Profile(models.Model):
-#     score

@@ -25,6 +25,7 @@ class ContactUs(models.Model):
     class Meta:
         verbose_name_plural = 'Contact_Us'
 
+
 class CleaningServicePet(models.Model):
     haircut = models.TextField(max_length=4096, verbose_name="توضیحات کوتاه کردن مو سگ و گربه")
     nail_trimming = models.TextField(max_length=4096, verbose_name="توضیحات کوتاه کردن ناخن سگ و گربه")

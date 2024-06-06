@@ -24,8 +24,8 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("accounts.urls")),
     # path("product/", include("product.urls", namespace="product")),
-    # path("blog/", include("blog.urls", namespace="blog")),
-    # path("home/", include("home.urls", namespace="home")),
+    path("blog/", include("blog.urls", namespace="blog")),
+    path("home/", include("home.urls", namespace="home")),
     # path("order/", include("order.urls", namespace="order")),
     path("site/", include("site_settings.urls", namespace="site")),
     # Swagger

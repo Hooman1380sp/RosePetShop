@@ -1,3 +1,11 @@
-from django.shortcuts import render
+from rest_framework.generics import ListAPIView
 
-# Create your views here.
+
+from accounts.models import User
+from .serializers import UserScoreSerializer
+
+
+class UserScoreListView(ListAPIView):
+    serializer_class = UserScoreSerializer
+    model = User
+    queryset = User.get_user_by_score
