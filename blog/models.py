@@ -1,5 +1,6 @@
 from django.db import models
 from django_cleanup import cleanup
+from product.models import SuppliesPetProduct
 
 
 @cleanup.select
@@ -8,7 +9,8 @@ class Blog(models.Model):
     description = models.TextField(max_length=4096, verbose_name="توضیحات")
     aparat_video_link = models.URLField(max_length=1024, verbose_name="لینک ویدیو آپارات")
     image = models.ImageField(upload_to="blog/", verbose_name="تصویر")
-    tags = models.ManyToManyField(to='BlogTag', verbose_name="تگ ها")
+    tags = models.ManyToManyField(to='BlogTag', verbose_name="تگ ها", blank=True)
+    product = models.ManyToManyField(to=SuppliesPetProduct, verbose_name="محصولات مرتبط", blank=True)
 
     def __str__(self):
         return f"{self.title} - {self.description[:35]}"
