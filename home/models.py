@@ -7,11 +7,13 @@ class PetFood(models.Model):
                              help_text="عنوان یا نام غذای خود را در این بخش وارد کنید")
     description = models.TextField(max_length=4096, verbose_name="توضیحات",
                                    help_text="توضیحات و شرح جزییات غذای خود را در این بخش بنویسید")
-    unit = models.DecimalField(max_length=256, decimal_places=4, max_digits=9, verbose_name="واحد اندازه بسته غذا",
+    unit = models.DecimalField(decimal_places=4, max_digits=9,verbose_name="واحد اندازه بسته غذا",
                                help_text="مقدار به کیلو یا گرم بنویسید و عدد صحیح یا اعشاری بنویسید!")
     is_available = models.BooleanField(default=True, verbose_name="غذا موجود هست/نیست")
+    price = models.PositiveIntegerField(verbose_name="قیمت")
 
     class Meta:
+        ordering = ["-id"]
         verbose_name = "غذا"
         verbose_name_plural = "غذاها"
 
@@ -23,3 +25,10 @@ class PetFood(models.Model):
 class PetFoodImage(models.Model):
     image = models.ImageField(upload_to="home/Pet_Food/", verbose_name="تصویر")
     food = models.ForeignKey(to=PetFood, on_delete=models.CASCADE, verbose_name="غذا")
+
+    class Meta:
+        verbose_name = "تصاویر غذا"
+        verbose_name_plural = "تصاویر غذاها"
+
+    def __str__(self):
+        return str(self.id)

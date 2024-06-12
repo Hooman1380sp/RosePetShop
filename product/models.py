@@ -1,7 +1,8 @@
 from django.db import models
 from django.utils.html import mark_safe
-from accounts.models import User
 from django_cleanup import cleanup
+
+from accounts.models import User
 
 
 @cleanup.select
@@ -32,7 +33,7 @@ class SuppliesPetProduct(models.Model):
     description = models.TextField(max_length=1024, verbose_name="توضیحات")
     color = models.CharField(max_length=512, verbose_name="رنگ محصول")
     unit = models.CharField(max_length=512, verbose_name="وزن", null=True, blank=True)
-    price = models.IntegerField(verbose_name="قیمت")
+    price = models.PositiveIntegerField(verbose_name="قیمت")
     made_by_country = models.CharField(max_length=256, verbose_name="ساخت کشور")
     is_available = models.BooleanField(default=True, verbose_name="موجود در انبار هست/نیست")
     category = models.ForeignKey(to=SuppliesPetCategory, on_delete=models.CASCADE,
@@ -58,7 +59,7 @@ class SuppliesPetDiscount(models.Model):
 
     product = models.ForeignKey(to=SuppliesPetProduct, on_delete=models.CASCADE,
                                 verbose_name="محصول", related_name="supplies_pet_product")
-    discount_price = models.IntegerField(verbose_name="قیمت ویژه")
+    discount_price = models.PositiveIntegerField(verbose_name="قیمت ویژه")
     created = models.DateTimeField(auto_now_add=True, verbose_name="تاریخ ایجاد")
 
     class Meta:
@@ -67,6 +68,7 @@ class SuppliesPetDiscount(models.Model):
 
     def __str__(self):
         return f"{self.product.title} - {self.discount_price}"
+
 
 @cleanup.select
 class SuppliesPetImage(models.Model):

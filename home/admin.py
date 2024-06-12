@@ -1,3 +1,12 @@
 from django.contrib import admin
+from .models import PetFood, PetFoodImage
 
-# Register your models here.
+
+class PetFoodImageInLine(admin.StackedInline):
+    model = PetFoodImage
+
+
+@admin.register(PetFood)
+class PetFoodAdmin(admin.ModelAdmin):
+    inlines = [PetFoodImageInLine]
+    search_fields = ["title"]
