@@ -7,10 +7,12 @@ from rest_framework import status
 
 from .serializers import BlogSerializer
 from .models import Blog
+from .paginations import PageNumberPaginationSize10
 
 
 class BlogListView(ListAPIView):
     throttle_classes = [AnonRateThrottle, UserRateThrottle]
+    pagination_class = PageNumberPaginationSize10
     serializer_class = BlogSerializer
     queryset = Blog.List_Blog
 
