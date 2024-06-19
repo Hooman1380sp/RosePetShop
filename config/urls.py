@@ -19,6 +19,8 @@ from django.urls import path, include
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework_simplejwt.views import TokenRefreshView
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -26,8 +28,10 @@ urlpatterns = [
     path("product/", include("product.urls", namespace="product")),
     path("blog/", include("blog.urls", namespace="blog")),
     path("home/", include("home.urls", namespace="home")),
-    # path("order/", include("order.urls", namespace="order")),
+    path("order/", include("order.urls", namespace="order")),
     path("site/", include("site_settings.urls", namespace="site")),
+    # JWT
+    path("accounts/api/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     # Swagger
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("api/swagger/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),

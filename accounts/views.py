@@ -1,15 +1,12 @@
-from datetime import timedelta
-from django.utils import timezone
 from django.utils.crypto import get_random_string
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
 from rest_framework.views import APIView
-from rest_framework_simplejwt.tokens import AccessToken
+from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 from django.shortcuts import get_object_or_404
 from django.core.cache import cache
 from rest_framework.permissions import IsAuthenticated
-
 from .utils import Send_Otp_Code, Send_Otp_Code_Forgot_Link
 from .permissions import IsOwnerAndAuthenticated
 import random
@@ -70,10 +67,11 @@ class UserVerifyCodeView(APIView):
         if code == user_cache["random_code"]:
             user = User.objects.create_user(phone_number=phone_number, password=user_cache["password"],
                                             full_name=user_cache["full_name"], date_birth=user_cache["date_birth"])
-            access = AccessToken.for_user(user)
-            access_token = access
+            access_token = AccessToken.for_user(user)
+            refresh_token = RefreshToken.for_user(user)
             user.save()
-            return Response(data={"message": "register user is successful", "JWT_Token": str(access_token)},
+            return Response(data={"message": "register user is successful",
+                                  "JWT_Token_Access": str(access_token), "JWT_Token_Refresh": str(refresh_token)},
                             status=status.HTTP_201_CREATED)
         return Response(data={"message": "code is wrong"}, status=status.HTTP_406_NOT_ACCEPTABLE)
 
@@ -97,9 +95,12 @@ class UserLoginView(APIView):
                 return Response({"message": "Is Not Active Your Phone"}, status=status.HTTP_406_NOT_ACCEPTABLE)
             if user_phone == user.phone_number:
                 if user.check_password(user_password) or user.password == user_password:
-                    access = AccessToken.for_user(user)
-                    access_token = access
-                    return Response({"message": str(access_token)}, status=status.HTTP_202_ACCEPTED)
+                    access_token = AccessToken.for_user(user)
+                    refresh_token = RefreshToken.for_user(user)
+                    return Response({"message": "login is successful",
+                                     "JWT_Token_Access": str(access_token),
+                                     "JWT_Token_Refresh": str(refresh_token)},
+                                    status=status.HTTP_202_ACCEPTED)
                 return Response({"message": "password is wrong"}, status=status.HTTP_400_BAD_REQUEST)
             return Response({"message": "phone_number is wrong"}, status=status.HTTP_406_NOT_ACCEPTABLE)
         return Response({"message": "we can.t find any user with your Specifications"},
@@ -173,8 +174,6 @@ class ChangePasswordAccountView(APIView):
         ser_data.is_valid(raise_exception=True)
         if user.check_password(ser_data.validated_data.get("current_password")):
             user.set_password(ser_data.validated_data.get("new_password"))
-            print(ser_data.validated_data.get("current_password"))
-            print(ser_data.validated_data.get("new_password"))
             user.save()
             return Response(data={"message": "change password is successful"}, status=status.HTTP_202_ACCEPTED)
         return Response({"message": "Password is Wrong"}, status=status.HTTP_409_CONFLICT)
@@ -221,7 +220,6 @@ class ChangePhoneNumberView(APIView):
                 "message": "phone number already request, user should wait (4 min), to ask again"
             }, status=status.HTTP_409_CONFLICT)
         random_code = random.randint(1000, 9999)
-        print(random_code)
         cache.set(key=request.user.phone_number, value={
             "new_phone_number": str(new_phone_number),
             "random_code": str(random_code)
@@ -240,8 +238,6 @@ class VerifyChangePhoneNumberView(APIView):
         ser_data.is_valid(raise_exception=True)
         vd = ser_data.validated_data
         cache_instance = cache.get(request.user.phone_number)
-        print(vd["code"])
-        print(cache_instance)
         if cache_instance["random_code"] == vd["code"]:
             user: User = User.objects.filter(id=request.user.id).first()
             user.phone_number = cache_instance["new_phone_number"]
