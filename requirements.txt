@@ -5,8 +5,8 @@ charset-normalizer==3.3.2
 Django==5.0.6
 django-cleanup==8.1.0
 django-cors-headers==4.3.1
-django-cron==0.6.0
 django-js-asset==2.2.0
+django-redis==5.4.0
 djangorestframework==3.15.1
 djangorestframework-simplejwt==5.3.1
 drf-spectacular==0.27.2
@@ -16,8 +16,10 @@ jsonschema==4.22.0
 jsonschema-specifications==2023.12.1
 kavenegar==1.1.2
 pillow==10.3.0
+psycopg2-binary==2.9.9
 PyJWT==2.8.0
 PyYAML==6.0.1
+redis==3.5.3
 referencing==0.35.1
 requests==2.32.3
 rpds-py==0.18.1

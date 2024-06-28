@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-cf*mcz-kotgl-(tinu516gju%*1sqz@amn35$3&pefmh1wo4ls
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*", "https://rosepetshop-dg.liara.run/"]
 
 # Application definition
 
@@ -93,13 +93,55 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
+# Cors headers
+CORS_ALLOWED_ORIGINS = [
+    # "*",
+    "http://localhost:3030",
+    "http://127.0.0.1:3030",
+]
+CORS_ALLOW_HEADERS = ['*']
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_METHODS = (
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+)
+CORS_ALLOW_CREDENTIALS = True
+
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # 'HOST': 'localhost',
+        # 'PORT': '5432',
+        # 'NAME': 'asgari_weblog',
+        # 'PASSWORD': '13801380',
+        # 'USER': 'hooman'
+    }
+}
+
+# redis setting
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': "redis://127.0.0.1:6379/1",
+        'OPTIONS': {
+            # "PASSWORD": "xSYhDX9yVwqrVTq83JP5pQqK",
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
     }
 }
 
