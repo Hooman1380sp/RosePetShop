@@ -7,6 +7,7 @@ from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
 from django.shortcuts import get_object_or_404
 
 from .utils import get_client_ip
+from .paginations import PageNumberPaginationSize10
 from .models import SuppliesPetProduct, SuppliesPetCategory, SuppliesPetDiscount, ProductVisit
 from .serializers import (
     SuppliesPetProductListSerializer,
@@ -21,6 +22,7 @@ class SuppliesPetProductListView(ListAPIView):
     serializer_class = SuppliesPetProductListSerializer
     model = SuppliesPetProduct
     queryset = model.objects.filter(is_available=True)
+    pagination_class = PageNumberPaginationSize10
 
 
 class SuppliesPetProductDetailView(APIView):
@@ -44,6 +46,7 @@ class SuppliesPetProductDetailView(APIView):
 
 class MostVisitProductView(APIView):
     serializer_class = SuppliesPetProductListSerializer
+    pagination_class = PageNumberPaginationSize10
     # throttle_scope = 'get_request'
     """
      most visit product api (12P) => 12 number product api
@@ -78,6 +81,7 @@ class SuppliesPetCategoryListView(APIView):
 class SuppliesPetProductListByCategoryView(APIView):
     """get product by id category"""
     serializer_class = SuppliesPetProductListSerializer
+    pagination_class = PageNumberPaginationSize10
 
     def get(self, request, id):
         ser_data = self.serializer_class(instance=SuppliesPetProduct.objects.filter(

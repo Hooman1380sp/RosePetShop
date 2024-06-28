@@ -1,0 +1,11 @@
+{
+  "disks": [
+    {
+      "name": "files",
+      "mountTo": "media"
+    }
+  ],
+  "cron": [
+    "0 * * * * cd $ROOT && python3 manage.py RemoveExpiredDiscounts >> /dev/null 2>&1"
+  ]
+}

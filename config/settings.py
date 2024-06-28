@@ -45,7 +45,6 @@ EXTERNAL_APPS = [
     "corsheaders",
     "django_cleanup.apps.CleanupConfig",
     "drf_spectacular",
-    "django_cron",
 ]
 
 # Application definition
@@ -72,12 +71,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-]
-
-# Corn Settings
-
-CRON_CLASSES = [
-    "product.cron_job.RemoveExpiredDiscountsCronJob",
 ]
 
 ROOT_URLCONF = "config.urls"

@@ -37,7 +37,9 @@ class UserRegisterView(APIView):
         vd = ser_data.validated_data
         result = cache.get(vd['phone_number'])
         if result:
-            return Response(data={"message": "phone number already request, user should wait to ask again"})
+            return Response(
+                data={"message": "phone number already request, user should wait to ask again"},
+                status=status.HTTP_409_CONFLICT)
         random_code = random.randint(1000, 9999)
         values = {"random_code": str(random_code),
                   "password": vd["password"],
@@ -45,7 +47,7 @@ class UserRegisterView(APIView):
                   "date_birth": vd["date_birth"]}
         cache.set(key=vd["phone_number"], value=values, timeout=60 * 4)
         cache.close()
-        Send_Otp_Code(phone_number=vd['phone_number'], message=f"{random_code} Active Code ")
+        Send_Otp_Code(phone_number=vd['phone_number'], token1=random_code)
         return Response(data={"message": "ok"}, status=status.HTTP_302_FOUND)
 
 
@@ -120,11 +122,10 @@ class UserForgotPasswordView(APIView):
         user_phone = ser_data.validated_data.get("phone_number")
         user = User.objects.filter(phone_number__iexact=user_phone).first()
         if user is not None:
-            # todo (send code for user)
-            random_str = get_random_string(86)
+            random_str = get_random_string(40)
             cache.set(key=random_str, value=str(user_phone), timeout=60 * 4)
             cache.close()
-            Send_Otp_Code_Forgot_Link(to=user_phone, random_str=random_str)
+            Send_Otp_Code_Forgot_Link(phone_number=user_phone, random_str=random_str)
             return Response(data=ser_data.data, status=status.HTTP_202_ACCEPTED)
         return Response({"message": "This Number is wrong "}, status=status.HTTP_406_NOT_ACCEPTABLE)
 
@@ -225,7 +226,7 @@ class ChangePhoneNumberView(APIView):
             "random_code": str(random_code)
         }, timeout=60 * 4)
         cache.close()
-        Send_Otp_Code(phone_number=new_phone_number, message=f"{random_code} Active Code")
+        Send_Otp_Code(phone_number=new_phone_number, token1=random_code)
         return Response(data={"message": "ok"}, status=status.HTTP_302_FOUND)
 
 
