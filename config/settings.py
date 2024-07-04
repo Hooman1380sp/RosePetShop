@@ -95,7 +95,6 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 # Cors headers
 CORS_ALLOWED_ORIGINS = [
-    # "*",
     "http://localhost:3030",
     "http://127.0.0.1:3030",
 ]
@@ -133,17 +132,28 @@ DATABASES = {
     }
 }
 
-# redis setting
+# redis setting production
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': "redis://127.0.0.1:6379/1",
+        'LOCATION': "redis://:JSgaoKIDikqigTFgINDsSCEL@redis-rosepetshop:6379/0",
         'OPTIONS': {
-            # "PASSWORD": "xSYhDX9yVwqrVTq83JP5pQqK",
+            # "PASSWORD": "JSgaoKIDikqigTFgINDsSCEL",
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         }
     }
 }
+# redis setting local
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django_redis.cache.RedisCache',
+#         'LOCATION': "redis://127.0.0.1:6379/1",
+#         'OPTIONS': {
+#             # "PASSWORD": "JSgaoKIDikqigTFgINDsSCEL",
+#             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+#         }
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
