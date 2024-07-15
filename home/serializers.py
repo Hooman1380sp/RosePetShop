@@ -17,7 +17,7 @@ class PetFoodListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PetFood
-        fields = ("title", "description", "unit", "price", "image")
+        fields = ("title", "description", "unit", "price", "image", "id")
 
     def get_image(self, obj):
         return PetFoodImageSerializer(instance=PetFoodImage.objects.filter(food_id=obj.id), many=True).data
@@ -28,7 +28,7 @@ class PetFoodDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PetFood
-        fields = ("title", "description", "unit", "price", "image")
+        fields = ("title", "description", "unit", "price", "image", "id")
 
     def get_image(self, obj):
         return PetFoodImageSerializer(instance=PetFoodImage.objects.filter(food_id=obj.id), many=True).data

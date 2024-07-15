@@ -63,6 +63,7 @@ class SuppliesPetDiscount(models.Model):
     created = models.DateTimeField(auto_now_add=True, verbose_name="تاریخ ایجاد")
 
     class Meta:
+
         verbose_name = "محصول تخفیف ‌دار"
         verbose_name_plural = "محصولات تخفیف ‌دار"
 

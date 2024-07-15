@@ -49,10 +49,16 @@ class SuppliesPetProductDetailSerializer(serializers.ModelSerializer):
 
 
 class SuppliesPetProductDiscountListSerializer(serializers.ModelSerializer):
+    images = serializers.SerializerMethodField()
+
     class Meta:
         model = SuppliesPetDiscount
-        fields = ("discount_price", "product")
+        fields = ("discount_price", "product", "images")
         depth = 1
+
+    def get_images(self, obj: SuppliesPetDiscount):
+        return SuppliesPetImageSerializer(instance=SuppliesPetImage.objects.filter(
+            product_id=obj.product.id), many=True).data
 
 
 class DisCountAmountFieldSerializer(serializers.ModelSerializer):

@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 import os
+from corsheaders.defaults import default_headers
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -71,7 +72,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    #  corsheheaders
+    #  corsheaders
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
 ]
@@ -97,20 +98,10 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 
 # Cors headers
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3030",
-    "http://127.0.0.1:3030",
-]
-CORS_ALLOW_HEADERS = ['*']
+
+CORS_ALLOW_HEADERS = list(default_headers) + ['*', "Authorization"]
 CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_METHODS = (
-    "DELETE",
-    "GET",
-    "OPTIONS",
-    "PATCH",
-    "POST",
-    "PUT",
-)
+
 CORS_ALLOW_CREDENTIALS = True
 
 # Database
@@ -194,15 +185,15 @@ REST_FRAMEWORK = {
 }
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'ArtiSton Shop API',
-    'DESCRIPTION': 'ArtiSton Shop',
+    'TITLE': 'Rose Pet ShopAPI',
+    'DESCRIPTION': 'pet Shop',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
     # OTHER SETTINGS
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=2),
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
     "REFRESH_TOKEN_LIFETIME": timedelta(weeks=1),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,

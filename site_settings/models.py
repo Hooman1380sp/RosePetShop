@@ -9,7 +9,8 @@ class AboutUs(models.Model):
         return str(self.id)
 
     class Meta:
-        verbose_name_plural = 'About_Us'
+        verbose_name = 'درباره ما'
+        verbose_name_plural = 'درباره ما'
 
 
 class ContactUs(models.Model):
@@ -23,7 +24,8 @@ class ContactUs(models.Model):
         return str(self.id)
 
     class Meta:
-        verbose_name_plural = 'Contact_Us'
+        verbose_name = 'تماس با ما'
+        verbose_name_plural = 'تماس با ما'
 
 
 class CleaningServicePet(models.Model):
@@ -32,3 +34,7 @@ class CleaningServicePet(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+    class Meta:
+        verbose_name = "سرویس های پت"
+        verbose_name_plural = "سرویس های پت"

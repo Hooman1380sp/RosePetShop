@@ -43,7 +43,7 @@ class User(PermissionsMixin, AbstractBaseUser):
 
     @property
     def get_user_by_score(self):
-        return User.objects.order_by('-score')[:10]
+        return User.objects.order_by('score')[:10]
 
     class Meta:
         app_label = "accounts"

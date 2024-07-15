@@ -17,8 +17,8 @@ class Blog(models.Model):
 
     class Meta:
         ordering = ['-id']
-        verbose_name = "Blog"
-        verbose_name_plural = "Blogs"
+        verbose_name = "بلاگ"
+        verbose_name_plural = "بلاگ"
 
     @property
     def List_Blog(self):
@@ -30,3 +30,6 @@ class BlogTag(models.Model):
 
     def __str__(self):
         return self.title
+    class Meta:
+        verbose_name = "بلاگ تگ"
+        verbose_name_plural = "بلاگ تگ"
