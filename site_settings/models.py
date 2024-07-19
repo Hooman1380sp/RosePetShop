@@ -38,3 +38,17 @@ class CleaningServicePet(models.Model):
     class Meta:
         verbose_name = "سرویس های پت"
         verbose_name_plural = "سرویس های پت"
+
+
+class WorkingHours(models.Model):
+    saturday = models.CharField(max_length=256, verbose_name="شنبه")
+    sunday = models.CharField(max_length=256, verbose_name="یکشنبه")
+    monday = models.CharField(max_length=256, verbose_name="دوشنبه")
+    tuesday = models.CharField(max_length=256, verbose_name="سه شنبه")
+    wednesday = models.CharField(max_length=256, verbose_name="جهارشنبه")
+    thursday = models.CharField(max_length=256, verbose_name="پنجشنبه")
+    friday = models.CharField(max_length=256, verbose_name="جمعه")
+
+    class Meta:
+        verbose_name = "ساعات کاری"
+        verbose_name_plural = "ساعات کاری"

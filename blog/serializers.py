@@ -7,7 +7,7 @@ class BlogSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Blog
-        fields = ["title", "aparat_video_link", "tags", "description", "image", "id"]
+        fields = ["title", "aparat_video_link", "tags", "description", "image", "id", "product"]
         depth = 1
 
     def get_image(self, obj):
